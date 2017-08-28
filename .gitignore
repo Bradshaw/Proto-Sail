@@ -1,3 +1,6 @@
+#Ignore tiles folder because it's killing performance
+public/tiles
+
 #Sass
 
 *.css
