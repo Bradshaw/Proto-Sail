@@ -2,9 +2,11 @@ extends layout
 
 block content
   #map
+
   #vignette
   #target-feedback
-  #boat-waves
+  #boat-waves-holder
+    img#boat-waves//- (src='/images/boat_waves.gif')
   #boat
   #compass-background
   #compass-arrow
@@ -12,7 +14,7 @@ block content
     #rotate-left.button
     #toggle-sail.button
     #rotate-right.button
-  
+
   script(src="javascripts/NumberControl.js")
   script(src="javascripts/game.js")
     

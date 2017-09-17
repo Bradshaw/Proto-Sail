@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var reload = require('reload')
 var watch = require('watch')
 var pug_browser = require('pug-browser');
 
@@ -37,21 +36,6 @@ app.use('/users', users);
 app.use(pug_browser('/javascripts/templates.js', '**', {
   root: path.join(__dirname, 'views', 'game')
 }));
-
-var reloader = reload(app);
-
-watch.watchTree(__dirname + "/sass", function (f, curr, prev) {
-  if (typeof f == "object" && prev === null && curr === null) {
-  
-  } else
-    reloader.reload();
-});
-watch.watchTree(__dirname + "/views", function (f, curr, prev) {
-  if (typeof f == "object" && prev === null && curr === null) {
-  
-  } else
-    reloader.reload();
-});
 
 
 // catch 404 and forward to error handler

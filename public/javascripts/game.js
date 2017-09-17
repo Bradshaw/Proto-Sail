@@ -1,5 +1,4 @@
 var width, height;
-
 var targetFeedbackElement = document.getElementById('target-feedback');
 var compassBackgroundElement = document.getElementById('compass-background');
 
@@ -80,7 +79,7 @@ var map = new ol.Map({
 			}),
 		}),
 	],
-	renderer: ['webgl', 'canvas'],
+	//renderer: ['webgl', 'canvas'],
 	target: 'map',
 	view: view,
 });
