@@ -20,28 +20,24 @@ var controlMode = ControlMode.ROAMING;
 
 var targetCenter;
 
-var TARGET_RADIUS = 10;
-var MAX_ACCELERATION = 50000;
+var TARGET_RADIUS = 50;
+var MAX_ACCELERATION = 150000;
 var MAX_SPEED = 5000000;
-var MAX_ROTATION_ACCELERATION = 0.05;
+var MAX_ROTATION_ACCELERATION = 0.4;
 var MAX_ROTATION_SPEED = 0.5;
 var SPEED_ANGLE_DECREASE = 1;
 var speed = new NumberControl(0, NumberControl.LINEAR, MAX_ACCELERATION);
 var rotationSpeed = new NumberControl(0, NumberControl.LINEAR, MAX_ROTATION_ACCELERATION);
 
+var startlat = Math.random()*180-90;
+var startlon = Math.random()*360-180;
+
 var view = new ol.View({
-	center: ol.proj.fromLonLat([-3.042762,48.782753]),
+	center: ol.proj.fromLonLat([startlon,startlat]),
 	minZoom: 4,
 	zoom: 6,
 });
 
-var points = [
-    ol.proj.fromLonLat([-3.042762,48.782753]),
-    ol.proj.fromLonLat([5.042762,38.782753]),
-    ol.proj.fromLonLat([-5.042762,32.782753]),
-    ol.proj.fromLonLat([2.042762,28.782753]),
-];
-var lineString = new ol.geom.LineString(points, 'XY');
 var lineString = new ol.geom.Circle(ol.proj.fromLonLat([-3.042762,48.782753]), 500000);
 var lineStringFeature = new ol.Feature({
 	geometry: lineString,
@@ -79,7 +75,9 @@ var map = new ol.Map({
 			}),
 		}),
 	],
-	//renderer: ['webgl', 'canvas'],
+	
+	
+	renderer: ['webgl'],
 	target: 'map',
 	view: view,
 });
@@ -113,29 +111,6 @@ function rotateButtonUpHandler() {
 	};
 }
 
-document.getElementById('rotate-left').addEventListener('mousedown', rotateButtonDownHandler(1), false);
-document.getElementById('rotate-left').addEventListener('touchstart', rotateButtonDownHandler(1), false);
-document.getElementById('rotate-left').addEventListener('mouseup', rotateButtonUpHandler(), false);
-document.getElementById('rotate-left').addEventListener('touchend', rotateButtonUpHandler(), false);
-
-document.getElementById('rotate-right').addEventListener('mousedown', rotateButtonDownHandler(-1), false);
-document.getElementById('rotate-right').addEventListener('touchstart', rotateButtonDownHandler(-1), false);
-document.getElementById('rotate-right').addEventListener('mouseup', rotateButtonUpHandler(), false);
-document.getElementById('rotate-right').addEventListener('touchend', rotateButtonUpHandler(), false);
-
-document.getElementById('toggle-sail').addEventListener('singleclick', function(event) {
-	event.preventDefault();
-	if (controlMode != ControlMode.ROAMING) {
-		controlMode = ControlMode.ROAMING;
-		speed.target = 0;
-	}
-	else {
-		if (speed.target)
-			speed.target = 0;
-		else
-			speed.target = 1000;
-	}
-}, false);
 
 function mod(a, b) {
 	a=a%b;
