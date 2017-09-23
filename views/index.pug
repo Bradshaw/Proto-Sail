@@ -2,18 +2,22 @@ extends layout
 
 block content
   #map
+    .label map
 
   #vignette
+    .label vignette
   #target-feedback
+    .label target-feedback
   #boat-waves-holder
+    .label boat-waves-holder
     img#boat-waves//- (src='/images/boat_waves.gif')
+      .label boat-waves
   #boat
+    .label boat
   #compass-background
+    .label compass-background
   #compass-arrow
-  #controls.ol-unselectable
-    #rotate-left.button
-    #toggle-sail.button
-    #rotate-right.button
+    .label compass-arrow
 
   script(src="javascripts/NumberControl.js")
   script(src="javascripts/game.js")
