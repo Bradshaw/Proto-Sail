@@ -36,6 +36,17 @@ app.use('/users', users);
 app.use(pug_browser('/javascripts/templates.js', '**', {
   root: path.join(__dirname, 'views', 'game')
 }));
+app.use(function(req, res, next) {
+  const rgx = /\/tiles\/\d\d?\/\d\d?\/\d\d?.png/g;
+  if (rgx.test(req.originalUrl)){
+    console.log("Eat null");
+    res.status(200);
+    res.sendFile(path.join(__dirname,"public","null.png"));
+    //res.end();
+  } else {
+    next();
+  }
+});
 
 
 // catch 404 and forward to error handler
