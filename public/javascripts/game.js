@@ -81,20 +81,57 @@ var map = new ol.Map({
 	target: 'map',
 	view: view,
 });
-
+[]
 map.on('pointerdown', function(evt) {
 	controlMode = ControlMode.TARGET;
 	targetCenter = evt.coordinate;
-
-	var element = document.createElement('div');
-	element.style.left = evt.pixel[0] + 'px';
-	element.style.top = evt.pixel[1] + 'px';
-	targetFeedbackElement.appendChild(element);
-
-	setTimeout(function() {
-		element.remove();
-	}, 300);
+	placeIcon(evt.coordinate);
 });
+
+var touchIcon = {
+	offset: [0,0],
+	opacity: 1.0,
+	rotateWithView: true,
+	rotation: 0.0,
+	scale: 1.0,
+	size: [55,55],
+	src: '/images/touch_feedback.png'
+};
+
+function placeIcon(coords) {
+	var geometry = new ol.geom.Point(coords);
+	var feature = new ol.Feature(geometry);
+	feature.setStyle(new ol.style.Style({image: touchIcon}));
+	var features = [feature];
+	var vectorSource = new ol.source.Vector({features: features});
+	var vector = new ol.layer.Vector({source: vectorSource});
+	var map = new ol.Map({
+    renderer: /** @type {ol.renderer.Type} */ ('webgl'),
+    layers: [vector],
+    target: document.getElementById('map'),
+    view: new ol.View({
+      center: [0, 0],
+      zoom: 5
+    })
+  });
+	var overlayFeatures = [];
+  for (i = 0; i < 1; i += 1) {
+    var clone = features[i].clone();
+    clone.setStyle(null);
+    overlayFeatures.push(clone);
+  }
+
+  new ol.layer.Vector({
+    map: map,
+    source: new ol.source.Vector({
+      features: overlayFeatures
+    }),
+    style: new ol.style.Style({
+      image: touchIcon
+    })
+  });
+	console.log('Yo');
+}
 
 function rotateButtonDownHandler(target) {
 	return function(event) {
